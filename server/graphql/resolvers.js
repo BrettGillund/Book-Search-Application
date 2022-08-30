@@ -29,6 +29,15 @@ const resolvers = {
             }
             const token = await signToken(user);
             return { user, token }
+        },
+
+        addUser: async (_, { username, email, password }) => {
+            const user = await User.create({username, email, password})
+            const token = signToken(user);
+            return {token, user }
         }
+
     }
 }
+
+module.exports = resolvers;
