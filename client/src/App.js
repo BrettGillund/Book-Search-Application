@@ -6,7 +6,7 @@ import Navbar from './components/Navbar';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 
 const client = new ApolloClient({
-  uri: '',
+  uri: 'https://git.heroku.com/book-search-brett.git',
   cache: new InMemoryCache(),
 });
 
