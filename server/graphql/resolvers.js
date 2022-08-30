@@ -35,6 +35,36 @@ const resolvers = {
             const user = await User.create({username, email, password})
             const token = signToken(user);
             return {token, user }
+        },
+
+        saveBook: async (_, {bookId, authors, description, title, image, link}, context) => {
+                console.log(context.user._id)
+                return await User.findOneAndUpdate(
+                    {_id: context.user._id}, 
+                    {
+                        $addToSet: { savedBooks: {
+                            bookId,
+                            authors, 
+                            description, 
+                            title, 
+                            image, 
+                            link
+                            }
+                        }
+                    }, 
+                    {
+                        new: true, 
+                        runValidators: true
+                    }
+                );
+        },
+
+        removeBook: async (_, { userId, bookId }) => {
+            return await User.findOneAndUpdate(
+                { _id: userId }, 
+                { $pull: { savedBooks: { _id: bookId } } }, 
+                { new: true }
+            )
         }
 
     }
