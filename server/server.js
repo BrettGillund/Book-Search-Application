@@ -5,9 +5,18 @@ const routes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const { ApolloServer } = require('apollo-server-express');
+const server = new ApolloServer({
+  // typeDefs,
+  // resolvers,
+  // // csrfPrevention: true,
+  // // cache: 'bounded',
+})
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+server.applyMiddleware({app})
 
 // if we're in production, serve client/build as static assets
 if (process.env.NODE_ENV === 'production') {
